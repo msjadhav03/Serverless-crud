@@ -1,0 +1,71 @@
+service: employee-api
+
+frameworkVersion: "3.38.0"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: ap-south-1
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "dynamodb:GetItem"
+            - "dynamodb:PutItem"
+            - "dynamodb:DeleteItem"
+            - "dynamodb:Scan"
+          Resource:
+            - { "Fn::GetAtt": ["EmployeeTable", "Arn"] }
+functions:
+  createEmployee:
+    handler: index.createEmployee
+    events:
+      - httpApi:
+          path: /employee
+          method: post
+  deleteEmployee:
+    handler: index.deleteEmployee
+    events:
+      - httpApi:
+          path: /employee/{id}
+          method: delete
+  updateEmployee:
+    handler: index.updateEmployee
+    events:
+      - httpApi:
+          path: /employee/{id}
+          method: put
+  getEmployee:
+    handler: index.getEmployee
+    events:
+      - httpApi:
+          path: /employee/{id}
+          method: get
+  listEmployee:
+    handler: index.listEmployee
+    events:
+      - httpApi:
+          path: /employee
+          method: get
+
+plugins:
+  - serverless-plugin-typescript
+
+resources:
+  Resources:
+    EmployeeTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: EmployeeTable
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        AttributeDefinitions:
+          - AttributeName: employeeID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: employeeID
+            KeyType: HASH

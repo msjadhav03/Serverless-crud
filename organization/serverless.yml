@@ -1,0 +1,71 @@
+service: organization-api
+
+frameworkVersion: "3.38.0"
+
+provider:
+  name: aws
+  runtime: nodejs18.x
+  stage: dev
+  region: ap-south-1
+
+  iam:
+    role:
+      statements:
+        - Effect: Allow
+          Action:
+            - "dynamodb:GetItem"
+            - "dynamodb:PutItem"
+            - "dynamodb:DeleteItem"
+            - "dynamodb:Scan"
+          Resource:
+            - { "Fn::GetAtt": ["OrganizationTable", "Arn"] }
+functions:
+  createOrganization:
+    handler: index.createOrganization
+    events:
+      - httpApi:
+          path: /organization
+          method: post
+  deleteOrganization:
+    handler: index.deleteOrganization
+    events:
+      - httpApi:
+          path: /organization/{id}
+          method: delete
+  updateOrganization:
+    handler: index.updateOrganization
+    events:
+      - httpApi:
+          path: /organization/{id}
+          method: put
+  getOrganization:
+    handler: index.getOrganization
+    events:
+      - httpApi:
+          path: /organization/{id}
+          method: get
+  listOrganization:
+    handler: index.listOrganization
+    events:
+      - httpApi:
+          path: /organization
+          method: get
+
+plugins:
+  - serverless-plugin-typescript
+
+resources:
+  Resources:
+    OrganizationTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: OrganizationTable
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+        AttributeDefinitions:
+          - AttributeName: organizationID
+            AttributeType: S
+        KeySchema:
+          - AttributeName: organizationID
+            KeyType: HASH

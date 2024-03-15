@@ -1,0 +1,13 @@
+{
+  "name": "crud-employee",
+  "author": "Manisha Jadhav",
+  "description": "Project is concerned to demonstarte serverless functionality in Node.js",
+  "license": "ISC",
+  "version": "1.0.0",
+  "scripts": {
+    "start": "serverless deploy"
+  },
+  "devDependencies": {
+    "@serverless/compose": "^1.3.0"
+  }
+}

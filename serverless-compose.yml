@@ -1,0 +1,6 @@
+services:
+  employee-api:
+    path: employee
+
+  organization-api:
+    path: organization
