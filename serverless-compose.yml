@@ -1,6 +1,6 @@
 services:
   employee-api:
-    path: employee
+    path: src/employee
 
   organization-api:
-    path: organization
+    path: src/organization
