@@ -1,4 +1,4 @@
-# Commands
+# Serverless CRUD
 
 <p>  
     <img src="https://assets-global.website-files.com/60acbb950c4d6606963e1fed/60acbb950c4d66854e3e2013_logo%20serverless%20dark.svg" loading="lazy" width="150" height="23" alt="Serverless logo" class="logo-main">
