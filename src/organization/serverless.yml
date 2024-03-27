@@ -54,18 +54,4 @@ functions:
 plugins:
   - serverless-plugin-typescript
 
-resources:
-  Resources:
-    OrganizationTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: OrganizationTable
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        AttributeDefinitions:
-          - AttributeName: organizationID
-            AttributeType: S
-        KeySchema:
-          - AttributeName: organizationID
-            KeyType: HASH
+resources: ${file(./resources/resources.yml)}

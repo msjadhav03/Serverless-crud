@@ -54,18 +54,4 @@ functions:
 plugins:
   - serverless-plugin-typescript
 
-resources:
-  Resources:
-    EmployeeTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: EmployeeTable
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        AttributeDefinitions:
-          - AttributeName: employeeID
-            AttributeType: S
-        KeySchema:
-          - AttributeName: employeeID
-            KeyType: HASH
+resources: ${file(./resources/resources.yml)}

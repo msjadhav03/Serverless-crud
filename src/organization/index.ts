@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
+import "dotenv/config";
 import { v4 } from "uuid";
 import { handleError } from "./common/error-handler";
 import { organizationSchema } from "./model/organization.model";
@@ -11,7 +12,9 @@ import { HttpError } from "./common/HttpError";
 const { NOT_FOUND } = messages.COMMON;
 const { DELETION_SUCCESS } = messages.EMPLOYEE;
 
-const tableOrganizationName = "OrganizationTable";
+const { ORGANIZATION_TABLE_NAME } = process.env;
+
+const tableOrganizationName = ORGANIZATION_TABLE_NAME || "OrganizationTable";
 
 /**
  * Handler to add new employee to organization

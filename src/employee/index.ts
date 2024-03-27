@@ -1,4 +1,5 @@
 import { APIGatewayProxyEvent } from "aws-lambda";
+import "dotenv/config";
 import { v4 } from "uuid";
 import { employeeSchema } from "./model/employee.model";
 import { handleError } from "./common/error-handler";
@@ -10,7 +11,9 @@ import { messages } from "./common/messages";
 import { HttpError } from "./common/HttpError";
 const { DELETION_SUCCESS } = messages.EMPLOYEE;
 
-const tableEmployeeName = "EmployeeTable";
+const { EMPLOYEE_TABLE_NAME } = process.env;
+
+const tableEmployeeName = EMPLOYEE_TABLE_NAME || "EmployeeTable";
 
 /**
  * Add new employee to the origanization
